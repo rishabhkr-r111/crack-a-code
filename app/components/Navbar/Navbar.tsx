@@ -2,16 +2,16 @@
 
 import * as React from "react"
 import Link from "next/link"
-import { Menu, Search, User } from "lucide-react"
+import { Menu, User } from "lucide-react"
 
 export default function Navbar() {
   const [state, setState] = React.useState(false)
 
   const menus = [
-    { title: "Home", path: "/your-path" },
+    { title: "Home", path: "/" },
     { title: "Contests", path: "/contests" },
-    { title: "About Us", path: "/your-path" },
-    { title: "Contact Us", path: "/your-path" },
+    { title: "About Us", path: "#" },
+    { title: "Contact Us", path: "#" },
   ]
 
   return (
@@ -43,7 +43,7 @@ export default function Navbar() {
             ))}
           </ul>
         </div>
-        <Link href={"#"}><User className="h-5 w-5 flex-none text-gray-300 flex-end" /></Link>
+        <Link href={"/login"}><User className="h-5 w-5 flex-none text-gray-300 flex-end" /></Link>
       </div>
     </nav>
   )
