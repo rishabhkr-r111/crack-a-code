@@ -15,7 +15,6 @@ import Link from "next/link";
 export default function Register() {
     return (
         <>
-          <Navbar />
           <div className="h-lvh flex justify-center items-center" >
            <Card className="w-full max-w-sm">
             <CardHeader>

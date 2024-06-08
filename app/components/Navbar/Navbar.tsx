@@ -19,7 +19,7 @@ export default function Navbar() {
       <div className="items-center px-4 max-w-screen-xl mx-auto md:flex md:px-8">
         <div className="flex items-center justify-between py-3 md:py-5 md:block">
           <Link href="/">
-            <h1 className="text-3xl font-bold ">Logo</h1>
+            <h1 className="text-xl font-bold ">Crack A Code</h1>
           </Link>
           <div className="md:hidden">
             <button
@@ -35,15 +35,15 @@ export default function Navbar() {
             state ? "block" : "hidden"
           }`}
         >
-          <ul className="justify-center items-center space-y-8 md:flex md:space-x-6 md:space-y-0">
+          <ul className="justify-center items-center space-y-8 mr-10 md:flex md:space-x-6 md:space-y-0">
             {menus.map((item, idx) => (
-              <li key={idx} className="text-gray-600 hover:text-indigo-600">
+              <li key={idx} className="text-gray-600 mr-1 hover:text-indigo-600">
                 <Link href={item.path}>{item.title}</Link>
               </li>
             ))}
           </ul>
         </div>
-        <Link href={"/login"}><User className="h-5 w-5 flex-none text-gray-300 flex-end" /></Link>
+        <Link href={"/login"}><User className="flex-none text-gray-300 flex-end" /></Link>
       </div>
     </nav>
   )
