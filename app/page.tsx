@@ -26,11 +26,9 @@ export default function Home() {
         {displayedText}
       </div>
       <div className="text-9xl text-center font-brick text-green-800">
-        Crack A Code
+        Crack A Code_
       </div>
-        <Button className="w-1/4 bg-gray-800 text-white hover:text-black rounded-2xl mt-5">
-          <Link href={"/contests"} className="flex gap-2">Get Started <ArrowRight /> </Link>
-          </Button>
+          <Link href={"/contests"} className="flex gap-2 w-1/4 bg-gray-800 text-white rounded-2xl mt-5 p-3 items-center justify-center hover:bg-black">Get Started <ArrowRight /> </Link>
       </div>
     </main>
   );
