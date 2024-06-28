@@ -3,9 +3,19 @@
 import * as React from "react"
 import Link from "next/link"
 import { Menu, User } from "lucide-react"
+import { getUser } from '@/utils/user';
+import { useEffect } from "react";
+import { Button } from "@/components/ui/button";
+
 
 export default function Navbar() {
   const [state, setState] = React.useState(false)
+  const [data, setData] = React.useState(null);
+  useEffect(() => {
+    getUser().then((data) => {
+      setData(data)
+    })
+  }, [])
 
   const menus = [
     { title: "Home", path: "/" },
@@ -43,7 +53,9 @@ export default function Navbar() {
             ))}
           </ul>
         </div>
-        <Link href={"/login"}><User className="flex-none text-gray-300 flex-end" /></Link>
+        {data && data.user ? (<div><Link href={"/dashboard"}><Button>Dashboard</Button></Link></div>):
+        (<Link href={"/login"}><User className="flex-none text-gray-300 flex-end" /></Link>)}
+        
       </div>
     </nav>
   )

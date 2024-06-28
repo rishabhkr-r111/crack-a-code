@@ -1,9 +1,83 @@
-import Navbar from "../components/Navbar/Navbar"
+import dayjs from 'dayjs';
+import { createClient } from '@/utils/supabase/server';
+import { Button } from '@/components/ui/button';
+import Link from 'next/link';
+import { redirect } from 'next/navigation'
 
-export default function Contests() {
+
+
+async function Contests() {
+  const supabase = createClient();
+  const { data, error } = await supabase.auth.getUser()
+  if (error || !data?.user) {
+    redirect('/login')
+  }
+
+  const { data: contests, err } = await supabase
+    .from('contests')
+    .select('*')
+
+  if (!contests) {
+    console.error(err );
+    return;
+  }
+  
+  const ongoing = contests.filter(contest => contest.end_at > new Date().toISOString());
+  // const upcoming = contests.filter(contest => contest.created_at > new Date().toISOString());
+  // const finished = contests.filter(contest => contest.end_at < new Date().toISOString());
+  const now = dayjs();
+
+  // const ongoing = contests.filter(contest => now.isAfter(dayjs(contest.created_at)) && now.isBefore(dayjs(contest.end_at)));
+  // const upcoming = contests.filter(contest => now.isBefore(dayjs(contest.created_at)));
+  // const finished = contests
+
   return (
-    <div>
-      <h1>Contests</h1>
-    </div>
-  )
+    <div className="container mx-auto p-4">
+      <h1 className="text-4xl font-bold mb-4 text-center">Contests</h1>
+      <h1 className="text-4xl font-bold mb-4 text-center">Hi, {data.user.email}</h1>
+      <Button className='float-right mr-4'>Create Contest</Button>
+      
+      <section>
+        <h2 className="text-xl font-semibold mb-2">Ongoing</h2>
+        <ul>
+          {ongoing.length ? ongoing.map(contest => (
+            <li key={contest.id} className="p-4 rounded shadow mb-2">
+              <h3 className="text-lg font-bold">{contest.name}</h3>
+              <p>{contest.description}</p>
+              <p>Ends at: {dayjs(contest.end_at).format('YYYY-MM-DD HH:mm:ss')}</p>
+            </li>
+          )) : <p>No ongoing contests.</p>}
+        </ul>
+      </section>
+      
+      {/* <section>
+        <h2 className="text-xl font-semibold mb-2">Upcoming</h2>
+        <ul>
+          {upcoming.length ? upcoming.map(contest => (
+            <li key={contest.id} className="p-4 rounded shadow mb-2">
+              <h3 className="text-lg font-bold">{contest.name}</h3>
+              <p>{contest.description}</p>
+              <p>Starts at: {dayjs(contest.created_at).format('YYYY-MM-DD HH:mm:ss')}</p>
+            </li>
+          )) : <p>No upcoming contests.</p>}
+        </ul>
+      </section>
+      
+      <section>
+        <h2 className="text-xl font-semibold mb-2">Finished</h2>
+        <ul>
+          {finished.length ? finished.map(contest => (
+            <li key={contest.id} className="p-4  rounded shadow mb-2">
+              <h3 className="text-lg font-bold">{contest.name}</h3>
+              <p>{contest.description}</p>
+              <p>Ended at: {dayjs(contest.end_at).format('YYYY-MM-DD HH:mm:ss')}</p>
+            </li>
+          )) : <p>No finished contests.</p>}
+        </ul>
+      </section>
+          */}
+    </div> 
+  );
 }
+
+export default Contests;

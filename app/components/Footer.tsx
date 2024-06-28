@@ -9,7 +9,7 @@ const Footer = () => {
         <div className="text-lg">
           <h2 className="font-bold">Contact Us</h2>
           <p className="mt-2">Email: info@crackacode.com</p>
-          <p>Phone: +123 456 7890</p>
+          <p>Phone: +9123 456 7890</p>
         </div>
         <div>
           <h2 className="font-bold">Follow Us</h2>
