@@ -20,8 +20,8 @@ export default function Navbar() {
   const menus = [
     { title: "Home", path: "/" },
     { title: "Contests", path: "/contests" },
-    { title: "About Us", path: "#" },
-    { title: "Contact Us", path: "#" },
+    { title: "About Us", path: "/about-us" },
+    { title: "Contact Us", path: "/contact-us" },
   ]
 
   return (

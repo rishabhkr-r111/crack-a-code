@@ -13,12 +13,12 @@ async function Contests() {
     redirect('/login')
   }
 
-  const { data: contests, err } = await supabase
+  const { data: contests} = await supabase
     .from('contests')
     .select('*')
 
   if (!contests) {
-    console.error(err );
+    console.error("some error occured" );
     return;
   }
   
