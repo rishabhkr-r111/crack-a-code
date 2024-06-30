@@ -3,6 +3,7 @@ import { createClient } from '@/utils/supabase/server';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import dayjs from 'dayjs';
 import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 
 export default async function ContestQuestions({ params }: { params: { slug: string } }) {
   const supabase = createClient();
@@ -28,7 +29,7 @@ export default async function ContestQuestions({ params }: { params: { slug: str
       <Card className="rounded shadow-lg">
         <CardHeader>
           <CardTitle className="text-4xl font-bold">{contest.name}
-          <Button className='float-right'>Add Questions</Button>
+          <Link href={`${contest.slug}/add`}><Button className='float-right'>Add Questions</Button></Link>
           </CardTitle>
           <CardDescription className="text-md">{contest.description}</CardDescription>
         </CardHeader>
