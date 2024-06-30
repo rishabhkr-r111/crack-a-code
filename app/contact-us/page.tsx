@@ -1,96 +1,57 @@
 
 export default function ContactUs() {
-  const styles = {
-    container: {
-      backgroundColor: '#333', // Dark blue background
-      color: '#fff', // White text color
-      padding: '20px',
-      fontFamily: 'Arial, sans-serif',
-      maxWidth: '800px',
-      margin: '0 auto',
-      borderRadius: '8px',
-      boxShadow: '0 0 10px rgba(0, 0, 0, 0.5)',
-    },
-    heading: {
-      textAlign: 'center',
-      marginBottom: '20px',
-    },
-    contactInfo: {
-      marginBottom: '20px',
-      padding: '10px',
-      backgroundColor: '#23395d',
-      borderRadius: '8px',
-    },
-    form: {
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-    },
-    label: {
-      marginBottom: '10px',
-      width: '100%',
-      maxWidth: '400px',
-      color: '#fff',
-    },
-    input: {
-      width: '100%',
-      padding: '10px',
-      marginBottom: '10px',
-      border: '1px solid #ccc',
-      borderRadius: '4px',
-      backgroundColor: '#f4f4f4', // Light color text box
-      color: '#333', // Dark text color inside text box
-    },
-    textarea: {
-      width: '100%',
-      padding: '10px',
-      marginBottom: '10px',
-      border: '1px solid #ccc',
-      borderRadius: '4px',
-      backgroundColor: '#f4f4f4', // Light color text box
-      color: '#333', // Dark text color inside text box
-      minHeight: '100px',
-    },
-    button: {
-      padding: '10px 20px',
-      border: 'none',
-      borderRadius: '4px',
-      backgroundColor: '#4CAF50', // Green button
-      color: '#fff',
-      cursor: 'pointer',
-    },
-  };
-
   return (
-    <div style={styles.container}>
-      <h1 style={styles.heading}>Contact Us</h1>
-      <p>If you have any questions, feel free to reach out to us by filling the form below or using the contact information provided.</p>
-      
-      <div style={styles.contactInfo}>
-        <h2>Contact Information</h2>
-        <p>Email: crackacode@gmail.com</p>
-        <p>Phone: +1(123)456-7890</p>
-        <p>Address: Bangalore:560017</p>
+    <div className="flex justify-center items-center h-screen bg-gray-900 text-white">
+      <div className="bg-gray-800 p-8 rounded shadow-md max-w-md w-full">
+        <h1 className="text-3xl font-bold mb-4 text-center">Contact Us</h1>
+        <form className="space-y-4">
+          <div className="flex flex-col">
+            <label htmlFor="name" className="text-sm font-medium">
+              Name
+            </label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              className="border border-gray-700 rounded px-3 py-2 mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-900 text-white"
+              placeholder="Your Name"
+            />
+          </div>
+          <div className="flex flex-col">
+            <label htmlFor="email" className="text-sm font-medium">
+              Email
+            </label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              className="border border-gray-700 rounded px-3 py-2 mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-900 text-white"
+              placeholder="Your Email"
+            />
+          </div>
+          <div className="flex flex-col">
+            <label htmlFor="message" className="text-sm font-medium">
+              Message
+            </label>
+            <textarea
+              id="message"
+              name="message"
+              rows="4"
+              className="border border-gray-700 rounded px-3 py-2 mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-900 text-white"
+              placeholder="Your Message"
+            ></textarea>
+          </div>
+          <div className="flex justify-center">
+            <button
+              type="submit"
+              className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              Submit
+            </button>
+          </div>
+        </form>
       </div>
-      
-      <h2>Contact Form</h2>
-      <form style={styles.form}>
-        <label style={styles.label}>
-          Name:
-          <input type="text" name="name" style={styles.input} />
-        </label>
-        <label style={styles.label}>
-          Email:
-          <input type="email" name="email" style={styles.input} />
-        </label>
-        <label style={styles.label}>
-          Message:
-          <textarea name="message" style={styles.textarea}></textarea>
-        </label>
-        <button type="submit" style={styles.button}>
-          Submit
-        </button>
-      </form>
     </div>
   );
 }
+
