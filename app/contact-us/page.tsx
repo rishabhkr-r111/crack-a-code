@@ -1,50 +1,53 @@
-
 export default function ContactUs() {
   return (
-    <div className="flex justify-center items-center h-screen bg-gray-900 text-white">
-      <div className="bg-gray-800 p-8 rounded shadow-md max-w-md w-full">
-        <h1 className="text-3xl font-bold mb-4 text-center">Contact Us</h1>
-        <form className="space-y-4">
-          <div className="flex flex-col">
-            <label htmlFor="name" className="text-sm font-medium">
-              Name
-            </label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              className="border border-gray-700 rounded px-3 py-2 mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-900 text-white"
-              placeholder="Your Name"
-            />
+    <div className="min-h-screen bg-gray-900 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-md w-full space-y-8">
+        <div>
+          <h2 className="mt-6 text-center text-3xl font-extrabold text-white">Contact Us</h2>
+          <p className="mt-2 text-center text-sm text-gray-400">
+            We'd love to hear from you!
+          </p>
+        </div>
+        <form className="mt-8 space-y-6">
+          <div className="rounded-md shadow-sm -space-y-px">
+            <div>
+              <label htmlFor="name" className="sr-only">Name</label>
+              <input
+                id="name"
+                name="name"
+                type="text"
+                required
+                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                placeholder="Your Name"
+              />
+            </div>
+            <div>
+              <label htmlFor="email" className="sr-only">Email</label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                required
+                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                placeholder="Your Email"
+              />
+            </div>
+            <div>
+              <label htmlFor="message" className="sr-only">Message</label>
+              <textarea
+                id="message"
+                name="message"
+                rows="4"
+                required
+                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                placeholder="Your Message"
+              />
+            </div>
           </div>
-          <div className="flex flex-col">
-            <label htmlFor="email" className="text-sm font-medium">
-              Email
-            </label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              className="border border-gray-700 rounded px-3 py-2 mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-900 text-white"
-              placeholder="Your Email"
-            />
-          </div>
-          <div className="flex flex-col">
-            <label htmlFor="message" className="text-sm font-medium">
-              Message
-            </label>
-            <textarea
-              id="message"
-              name="message"
-              rows="4"
-              className="border border-gray-700 rounded px-3 py-2 mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-900 text-white"
-              placeholder="Your Message"
-            ></textarea>
-          </div>
-          <div className="flex justify-center">
+          <div className="flex items-center justify-center">
             <button
               type="submit"
-              className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
               Submit
             </button>
@@ -54,4 +57,3 @@ export default function ContactUs() {
     </div>
   );
 }
-
