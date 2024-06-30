@@ -40,7 +40,7 @@ export default function Login() {
             <CardHeader>
               <CardTitle className="text-2xl">Login</CardTitle>
               <CardDescription>
-                Enter your email below to login to your account.
+                Enter your credentials to login to your account.
               </CardDescription>
             </CardHeader>
             <CardContent className="grid gap-4">
@@ -50,10 +50,10 @@ export default function Login() {
               </div>
               <div className="grid gap-2">
                 <Label htmlFor="password" >Password</Label>
-                <Input id="password"  type="password" onChange={ e => {setPassword(e.target.value)}} required />
+                <Input id="password"  type="password" onChange={ e => {setPassword(e.target.value)}} placeholder="Password should be 8 characters long." required />
               </div>
             </CardContent>
-            <div className="text-center mb-5">click her to <Link href="/register" className="font-bold text-green-700">register</Link></div>
+            <div className="text-center mb-5">Click here to <Link href="/register" className="font-bold text-green-700">Register</Link></div>
             <CardFooter>
               <Button className="w-full" onClick={handleLogin}>Sign in</Button>
             </CardFooter>
