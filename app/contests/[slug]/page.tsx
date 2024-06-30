@@ -24,12 +24,22 @@ export default async function ContestQuestions({ params }: { params: { slug: str
     return;
   }
 
+  const { data: questions } = await supabase
+    .from('questions')
+    .select('*')
+    .eq('contest_id', contest.id)
+
+  if (!questions) {
+    console.error("some error ocuur while fetching questions");
+    return;
+  }
+
   return ( 
    <div className="container mx-auto mt-10">
       <Card className="rounded shadow-lg">
         <CardHeader>
           <CardTitle className="text-4xl font-bold">{contest.name}
-          <Link href={`${contest.slug}/add`}><Button className='float-right'>Add Questions</Button></Link>
+          <Link href={`${contest.slug}/add?contestId=${contest.id}`}><Button className='float-right'>Add Questions</Button></Link>
           </CardTitle>
           <CardDescription className="text-md">{contest.description}</CardDescription>
         </CardHeader>
@@ -42,14 +52,23 @@ export default async function ContestQuestions({ params }: { params: { slug: str
       </Card>
 
       <div className="mt-10">
-        {/* Placeholder for questions or additional contest content */}
         <Card className="rounded shadow-lg">
           <CardHeader>
             <CardTitle className="text-xl font-semibold">Contest Questions</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-md text-gray-600">Questions will be displayed here.</p>
-            {/* Replace with actual questions content */}
+            {questions.length > 0 ? (
+              <ul className="space-y-4" >
+                {questions.map((question, idx) => (
+                  <li key={question.id} className="border p-4 rounded-md flex justify-between">
+                    <Link href={`solve/?questionId=${question.id}`}><h3 className="text-lg text-blue-400">{idx+1}. {question.name}</h3></Link>
+                    <Link href={`solve/?questionId=${question.id}`}><Button>Solve</Button></Link>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p>No questions added yet.</p>
+            )}
           </CardContent>
         </Card>
       </div>
