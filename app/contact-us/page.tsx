@@ -1,4 +1,3 @@
-
 export default function ContactUs() {
   return (
     <div className="flex justify-center items-center h-screen text-white">
@@ -53,4 +52,3 @@ export default function ContactUs() {
     </div>
   );
 }
-
