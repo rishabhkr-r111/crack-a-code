@@ -38,7 +38,7 @@ async function Contests() {
       
       <section>
         <h2 className="text-xl font-semibold mb-2">Ongoing</h2>
-        <div className="flex gap-5 ">
+        <div className="flex gap-5 flex-wrap">
         {ongoing.length ? ongoing.map(contest => (
           <Link href={`/contests/${contest.slug}`} key={contest.id}>
           <Card key={contest.id} className="rounded shadow w-[350px] hover:bg-green-200 hover:text-black">
