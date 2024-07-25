@@ -9,12 +9,15 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@codemirror/lang-python": "^6.1.6",
+    "@codemirror/theme-one-dark": "^6.1.2",
     "@radix-ui/react-label": "^2.0.2",
     "@radix-ui/react-menubar": "^1.0.4",
     "@radix-ui/react-navigation-menu": "^1.1.4",
     "@radix-ui/react-slot": "^1.0.2",
     "@supabase/ssr": "^0.4.0",
     "@supabase/supabase-js": "^2.44.2",
+    "@uiw/react-codemirror": "^4.23.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "codemirror": "^5.65.16",
@@ -26,6 +29,7 @@
     "react": "^18",
     "react-codemirror2": "^8.0.0",
     "react-dom": "^18",
+    "react-resizable": "^3.0.5",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7"
   },

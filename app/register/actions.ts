@@ -28,7 +28,8 @@ export async function signup(formData: FormData) {
       .from("accounts")
       .insert({
         user_id: data.user.id,
-        role: "USER", 
+        role: "USER",
+        email: d.email,
       });
 
     if (insertError) {
