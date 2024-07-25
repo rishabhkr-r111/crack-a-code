@@ -3,6 +3,7 @@ export default function ContactUs() {
     <div className="flex justify-center items-center h-screen text-white">
       <div className="bg-gray-800 p-8 rounded shadow-md max-w-md w-full">
         <h1 className="text-3xl font-bold mb-4 text-center">Contact Us</h1>
+        <p className="text-2x1 font-light mb-2 text-center">For more queries related to our website, feel free to contact us!</p>
         <form className="space-y-4">
           <div className="flex flex-col">
             <label htmlFor="name" className="text-sm font-medium">
@@ -42,7 +43,7 @@ export default function ContactUs() {
           <div className="flex justify-center">
             <button
               type="submit"
-              className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="bg-green-700 text-white py-2 px-4 rounded hover:bg-green-900 focus:outline-none focus:ring-2 focus:ring-green-400"
             >
               Submit
             </button>
