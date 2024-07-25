@@ -5,13 +5,16 @@ import Link from 'next/link';
 import { redirect } from 'next/navigation'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 
-
 async function Contests() {
   const supabase = createClient();
   const { data, error } = await supabase.auth.getUser()
   if (error || !data?.user) {
     redirect('/login')
   }
+
+  const { data: userData } = await supabase.from('accounts').select("*").eq("user_id", data.user.id).single()
+  console.log(userData);
+  const role = userData?.role;
 
   const { data: contests} = await supabase
     .from('contests')
@@ -34,7 +37,7 @@ async function Contests() {
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-4xl font-bold mb-4 text-center">Contests</h1>
-      <Link href={"/contests/new"}><Button className='float-right mr-4'>Create Contest</Button></Link>
+      {role == 'ADMIN' && <Link href={"/contests/new"}><Button className='float-right mr-4'>Create Contest</Button></Link>}
       
       <section>
         <h2 className="text-xl font-semibold mb-2">Ongoing</h2>

@@ -7,7 +7,7 @@ export async function getUser() {
 
   const { data, error } = await supabase.auth.getUser()
   if (error || !data?.user) {
-    redirect('/login')
+    return null;
   }
 
   return data;

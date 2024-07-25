@@ -21,6 +21,9 @@ export default async function Dashboard() {
       <h1 className="text-4xl font-bold mb-4 text-center">Dashboard</h1>
       <h1 className="text-4xl font-bold mb-4 text-center">Hi, {data.user.email}</h1>
       
+      <div>
+        <h1 className="text-2xl font-bold m-4 ">My Submitions</h1>
+      </div>
       <HandleSignOut />
     </div> 
   );

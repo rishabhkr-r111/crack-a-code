@@ -12,6 +12,10 @@ export default async function ContestQuestions({ params }: { params: { slug: str
     redirect('/login')
   }
 
+  const { data: userData } = await supabase.from('accounts').select("*").eq("user_id", data.user.id).single()
+  console.log(userData);
+  const role = userData?.role;
+
   const slug  = params.slug;
   const { data: contest } = await supabase
     .from('contests')
@@ -33,13 +37,22 @@ export default async function ContestQuestions({ params }: { params: { slug: str
     console.error("some error ocuur while fetching questions");
     return;
   }
-
+  const mockRankings = [
+    { user_id: 'user1', ranking: 1 },
+    { user_id: 'user2', ranking: 2 },
+    { user_id: 'user3', ranking: 3 },
+  ];
   return ( 
-   <div className="container mx-auto mt-10">
+    <div className="container mx-auto mt-10">
       <Card className="rounded shadow-lg">
         <CardHeader>
-          <CardTitle className="text-4xl font-bold">{contest.name}
-          <Link href={`${contest.slug}/add?contestId=${contest.id}`}><Button className='float-right'>Add Questions</Button></Link>
+          <CardTitle className="text-4xl font-bold">
+            {contest.name}
+            {role === "ADMIN" && (
+              <Link href={`${contest.slug}/add?contestId=${contest.id}`}>
+                <Button className='float-right'>Add Questions</Button>
+              </Link>
+            )}
           </CardTitle>
           <CardDescription className="text-md">{contest.description}</CardDescription>
         </CardHeader>
@@ -51,30 +64,57 @@ export default async function ContestQuestions({ params }: { params: { slug: str
         </CardContent>
       </Card>
 
-      <div className="mt-10">
-        <Card className="rounded shadow-lg">
-          <CardHeader>
-            <CardTitle className="text-xl font-semibold">Contest Questions</CardTitle>
-          </CardHeader>
-          <CardContent>
-            {questions.length > 0 ? (
-              <ul className="space-y-4" >
-                {questions.map((question, idx) => (
-                  <li key={question.id} className="border p-4 rounded-md flex justify-between">
-                    <Link href={`solve/?questionId=${question.id}`}><h3 className="text-lg text-blue-400">{idx+1}. {question.name}</h3></Link>
-                    <Link href={`solve/?questionId=${question.id}`}><Button>Solve</Button></Link>
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <p>No questions added yet.</p>
-            )}
-          </CardContent>
-        </Card>
+      <div className="mt-10 flex gap-10">
+        <div className="w-full">
+          <Card className="rounded shadow-lg">
+            <CardHeader>
+              <CardTitle className="text-xl font-semibold">Contest Questions</CardTitle>
+            </CardHeader>
+            <CardContent>
+              {questions.length > 0 ? (
+                <ul className="space-y-4">
+                  {questions.map((question, idx) => (
+                    <li key={question.id} className="border p-4 rounded-md flex justify-between">
+                      <Link href={`solve/?questionId=${question.id}`}>
+                        <h3 className="text-lg text-blue-400">{idx + 1}. {question.name}</h3>
+                      </Link>
+                      <Link href={`solve/?questionId=${question.id}`}>
+                        <Button>Solve</Button>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p>No questions added yet.</p>
+              )}
+            </CardContent>
+          </Card>
+        </div>
+        
+        {/* Mock User Rankings Card */}
+        <div className="w-1/2">
+          <Card className="rounded shadow-lg">
+            <CardHeader>
+              <CardTitle className="text-xl font-semibold">Rankings</CardTitle>
+            </CardHeader>
+            <CardContent>
+              {mockRankings.length > 0 ? (
+                <ul className="space-y-4">
+                  {mockRankings.map((ranking, idx) => (
+                    <li key={ranking.user_id} className="border p-4 rounded-md flex justify-between">
+                      <p className="text-lg">{idx + 1}. User ID: {ranking.user_id}</p>
+                      <p className="text-lg">score: {ranking.ranking}</p>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p>No rankings available yet.</p>
+              )}
+            </CardContent>
+          </Card>
+        </div>
       </div>
     </div>
   );
-
-
 }
 
