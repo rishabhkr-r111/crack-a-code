@@ -4,6 +4,7 @@ import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 
 import { createClient } from '@/utils/supabase/server'
+import { use } from 'react';
 
 export async function signup(formData: FormData) {
   const supabase = createClient();
@@ -11,6 +12,7 @@ export async function signup(formData: FormData) {
   const d = {
     email: formData.get("email") as string,
     password: formData.get("password") as string,
+    username: formData.get("username") as string,
   };
 
   // Sign up the user
@@ -30,6 +32,7 @@ export async function signup(formData: FormData) {
         user_id: data.user.id,
         role: "USER",
         email: d.email,
+        username: d.username,
       });
 
     if (insertError) {

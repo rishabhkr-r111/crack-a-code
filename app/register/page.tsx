@@ -17,6 +17,7 @@ import Link from "next/link";
 
 const Register: React.FC = () => {
   const [email, setEmail] = useState<string>("");
+  const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
@@ -37,6 +38,7 @@ const Register: React.FC = () => {
     const formData = new FormData();
     formData.append("email", email);
     formData.append("password", password);
+    formData.append("username", username);
 
     try {
       await signup(formData);
@@ -59,6 +61,17 @@ const Register: React.FC = () => {
           </CardHeader>
           <CardContent className="grid gap-4">
             <form onSubmit={handleRegister} className="grid gap-4">
+              <div className="grid gap-2">
+                <Label htmlFor="username">Username</Label>
+                <Input
+                  id="username"
+                  type="text"
+                  placeholder="username"
+                  required
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                />
+              </div>
               <div className="grid gap-2">
                 <Label htmlFor="email">Email</Label>
                 <Input

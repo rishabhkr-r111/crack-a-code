@@ -91,18 +91,18 @@ export default async function ContestQuestions({ params }: ContestQuestionsProps
     .sort((a, b) => b.ranking - a.ranking);
 
   // Fetch email addresses for all users in the rankings
-  const { data: userEmails, error: emailError } = await supabase
+  const { data: username, error: nameError } = await supabase
     .from('accounts')
-    .select('user_id, email')
+    .select('user_id, username')
     .in('user_id', rankings.map(r => r.user_id));
 
-  if (emailError) {
-    console.error("Error fetching user emails:", emailError);
+  if (nameError) {
+    console.error("Error fetching user:", nameError);
     return null;
   }
 
   // Create a map of user IDs to email addresses
-  const emailMap = new Map(userEmails?.map(user => [user.user_id, user.email]) || []);
+  const emailMap = new Map(username?.map(user => [user.user_id, user.username]) || []);
 
   // Add email to rankings
   const rankingsWithEmail: Ranking[] = rankings.map(ranking => ({

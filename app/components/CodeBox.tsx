@@ -57,7 +57,7 @@ if __name__ == '__main__':
 
   const output = `1->2->3->4->5`;
   const [code, setCode] = useState(py_code);
-  const editorRef = useRef(null);
+  const editorRef = useRef<any>(null); // Add type assertion here
 
   useEffect(() => {
     if (editorRef.current) {
