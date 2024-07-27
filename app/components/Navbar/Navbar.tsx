@@ -3,19 +3,27 @@
 import * as React from "react"
 import Link from "next/link"
 import { Menu, User } from "lucide-react"
-import { getUser } from '@/utils/user';
 import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
+import { createClient } from "@/utils/supabase/client";
 
 
 export default function Navbar() {
   const [state, setState] = React.useState(false)
-  const [data, setData] = React.useState(null);
+  const [data, setData] = React.useState(false);
+  const supabase = createClient();
   useEffect(() => {
-    getUser().then((data) => {
-      setData(data)
-    })
-  }, [])
+   const getAuth = async () => {
+    const { data : d, error } = await supabase.auth.getUser();
+      if (d.user) {
+        setData(true);
+      }
+      else {
+        setData(false);
+      }
+    }
+    getAuth();
+  }, [data, supabase]);
 
   const menus = [
     { title: "Home", path: "/" },
@@ -53,7 +61,7 @@ export default function Navbar() {
             ))}
           </ul>
         </div>
-        {data && data.user ? (<div><Link href={"/dashboard"}><Button>Dashboard</Button></Link></div>):
+        {data ? (<div><Link href={"/dashboard"}><Button>Dashboard</Button></Link></div>):
         (<Link href={"/login"}><User className="flex-none text-gray-300 flex-end" /></Link>)}
         
       </div>
