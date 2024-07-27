@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from 'react';
-import { AlertCircle, Play } from 'lucide-react';
+import { AlertCircle, Monitor, Play } from 'lucide-react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { GetQuestionById } from './action';
@@ -11,6 +11,7 @@ import { python } from '@codemirror/lang-python';
 import { handleSubmit } from './submit';
 import { createClient } from '@/utils/supabase/client';
 import { getUser } from '@/utils/user';
+import { useRouter } from 'next/navigation';
 
 export default function SolvePage() {
   const searchParams = useSearchParams();
@@ -22,16 +23,51 @@ export default function SolvePage() {
   const [error, setError] = useState('');
   const [question, setQuestion] = useState('');
   const [description, setDescription] = useState('');
+  const router = useRouter();
+
+  
 
   useEffect(() => {
+
+    const checkAuth = async () => {
+      const supabase = createClient();
+      const { data, error: e } = await supabase.auth.getUser()
+      if (e || !data?.user) {
+        router.push('/login');
+      }
+    }
+    checkAuth();
     GetQuestionById(questionId).then((data) => {
       setQuestion(data.name);
       setDescription(data.description);
       setContestId(data.contest_id);
       alredySubmitted();
+
+      const debounceTimer = setTimeout(() => moniterCode(true), 500);
+
+      return () => clearTimeout(debounceTimer);
     });
 
-  }, [questionId]);
+    //  const handleVisibilityChange = () => {
+    //   if (document.hidden) {
+    //     console.log("hidden");
+    //     moniterCode(false);
+    //   } else {
+    //     moniterCode(true);
+    //     console.log("vvvvvvv");
+
+    //   }
+    // };
+
+    // document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    // // Clean up the event listener when the component unmounts
+    // return () => {
+    //   // document.removeEventListener("visibilitychange", handleVisibilityChange);
+    //   moniterCode(false);
+    // };
+
+  }, [questionId, code]);
 
   const alredySubmitted = async () => {
     const supabase = createClient();
@@ -53,6 +89,45 @@ export default function SolvePage() {
     }
     
 
+  }
+
+  const moniterCode = async (is_Live : boolean) => {
+    const supabase = createClient();
+    const currentUser = await getUser();
+    const { data, error: e } = await supabase
+      .from('monitor')
+      .select('*')
+      .eq('user_id', currentUser?.user.id)
+      .single();
+
+    if (e && e.code !== 'PGRST116') {
+        console.error('Error checking monitor entry:', e);
+        return;
+    }
+
+    if(data){
+      const { error } = await supabase
+        .from('monitor')
+        .update({
+           current_code : code,
+           is_live: is_Live,
+           question_id: questionId,
+          })
+        .eq('user_id', currentUser?.user.id);
+    }
+    else{
+      const { error } = await supabase
+        .from('monitor')
+        .insert({
+          user_id: currentUser?.user.id,
+          current_code : code,
+          is_live: is_Live,
+          question_id: questionId,
+        })
+    }
+    if (error) {
+      console.error('Error updating monitor entry:', error);
+    }
   }
 
   const handleSubmitCode = async () => {
@@ -113,12 +188,12 @@ export default function SolvePage() {
   };
 
   return (
-    <div className="flex h-screen">
-      <div className="w-1/2 p-4 border-r">
+    <div className="flex flex-col md:flex-row min-h-screen">
+      <div className="w-full md:w-1/2 p-4 md:border-r">
         <h2 className="text-2xl font-bold mb-4">{question}</h2>
         <p className="mb-4">{description}</p>
       </div>
-      <div className="w-1/2 p-4 flex flex-col">
+      <div className="w-full md:w-1/2 p-4 flex flex-col">
         <h2 className="text-2xl font-bold mb-4">Code Editor</h2>
         <CodeMirror
           value={code}
@@ -128,10 +203,12 @@ export default function SolvePage() {
           theme={oneDark}
           className="flex-grow mb-4 font-mono"
         />
-        <Button onClick={handleRunCode} disabled={isLoading} className="mb-4">
-          <Play className="mr-2 h-4 w-4" /> Run Code
-        </Button>
-        <Button onClick={handleSubmitCode} disabled={isLoading} className="mb-4">Submit</Button>
+        <div className="flex flex-col sm:flex-row gap-2 mb-4">
+          <Button onClick={handleRunCode} disabled={isLoading} className="flex-1">
+            <Play className="mr-2 h-4 w-4" /> Run Code
+          </Button>
+          <Button onClick={handleSubmitCode} disabled={isLoading} className="flex-1">Submit</Button>
+        </div>
         {error && (
           <Alert variant="destructive" className="mb-4">
             <AlertCircle className="h-4 w-4" />
