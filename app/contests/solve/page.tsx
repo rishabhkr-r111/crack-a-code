@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import { AlertCircle, Monitor, Play } from 'lucide-react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
@@ -13,7 +13,7 @@ import { createClient } from '@/utils/supabase/client';
 import { getUser } from '@/utils/user';
 import { useRouter } from 'next/navigation';
 
-export default function SolvePage() {
+function SolvePageContent() {
   const searchParams = useSearchParams();
   const questionId = searchParams.get("questionId") || "";
   const [contestId, setContestId] = useState('');
@@ -25,54 +25,32 @@ export default function SolvePage() {
   const [description, setDescription] = useState('');
   const router = useRouter();
 
-  
-
   useEffect(() => {
-
     const checkAuth = async () => {
       const supabase = createClient();
-      const { data, error: e } = await supabase.auth.getUser()
+      const { data, error: e } = await supabase.auth.getUser();
       if (e || !data?.user) {
         router.push('/login');
       }
-    }
+    };
     checkAuth();
+
     GetQuestionById(questionId).then((data) => {
       setQuestion(data.name);
       setDescription(data.description);
       setContestId(data.contest_id);
-      alredySubmitted();
+      alreadySubmitted();
 
-      const debounceTimer = setTimeout(() => moniterCode(true), 500);
+      const debounceTimer = setTimeout(() => monitorCode(true), 500);
 
       return () => clearTimeout(debounceTimer);
     });
 
-    //  const handleVisibilityChange = () => {
-    //   if (document.hidden) {
-    //     console.log("hidden");
-    //     moniterCode(false);
-    //   } else {
-    //     moniterCode(true);
-    //     console.log("vvvvvvv");
-
-    //   }
-    // };
-
-    // document.addEventListener("visibilitychange", handleVisibilityChange);
-
-    // // Clean up the event listener when the component unmounts
-    // return () => {
-    //   // document.removeEventListener("visibilitychange", handleVisibilityChange);
-    //   moniterCode(false);
-    // };
-
   }, [questionId, code]);
 
-  const alredySubmitted = async () => {
+  const alreadySubmitted = async () => {
     const supabase = createClient();
     const currentUser = await getUser();
-    console.log(currentUser);
     const { data, error } = await supabase
       .from('submissions')
       .select('*')
@@ -81,17 +59,14 @@ export default function SolvePage() {
       .eq('correct', true)
       .single();
 
-    console.log(data);
-    if (data){
+    if (data) {
       setCode(data?.code || '');
-      setOutput("All Ready Submitted \n");
+      setOutput("Already Submitted \n");
       setIsLoading(true);
     }
-    
+  };
 
-  }
-
-  const moniterCode = async (is_Live : boolean) => {
+  const monitorCode = async (is_Live: boolean) => {
     const supabase = createClient();
     const currentUser = await getUser();
     const { data, error: e } = await supabase
@@ -101,55 +76,51 @@ export default function SolvePage() {
       .single();
 
     if (e && e.code !== 'PGRST116') {
-        console.error('Error checking monitor entry:', e);
-        return;
+      console.error('Error checking monitor entry:', e);
+      return;
     }
 
-    if(data){
+    if (data) {
       const { error } = await supabase
         .from('monitor')
         .update({
-           current_code : code,
-           is_live: is_Live,
-           question_id: questionId,
-          })
+          current_code: code,
+          is_live: is_Live,
+          question_id: questionId,
+        })
         .eq('user_id', currentUser?.user.id);
-    }
-    else{
+    } else {
       const { error } = await supabase
         .from('monitor')
         .insert({
           user_id: currentUser?.user.id,
-          current_code : code,
+          current_code: code,
           is_live: is_Live,
           question_id: questionId,
-        })
+        });
     }
+
     if (error) {
       console.error('Error updating monitor entry:', error);
     }
-  }
+  };
 
   const handleSubmitCode = async () => {
     setIsLoading(true);
     setError('');
 
-    const { data, error }  = await handleSubmit(questionId, contestId, code);
-    if(error!){
+    const { data, error } = await handleSubmit(questionId, contestId, code);
+    if (error) {
       setError(error);
-    }
-    else{
-      if(data?.pass_code == 100){
-        setOutput("Submited \n" + data.message);
-        
-      }
-      else{
-        setOutput("Submited \n" + data?.message);
+    } else {
+      if (data?.pass_code === 100) {
+        setOutput("Submitted \n" + data.message);
+      } else {
+        setOutput("Submitted \n" + data?.message);
         setIsLoading(false);
-        
       }
     }
-  }
+  };
 
   const handleRunCode = async () => {
     setIsLoading(true);
@@ -224,5 +195,13 @@ export default function SolvePage() {
         )}
       </div>
     </div>
+  );
+}
+
+export default function SolvePage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <SolvePageContent />
+    </Suspense>
   );
 }
