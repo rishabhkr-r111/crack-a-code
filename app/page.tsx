@@ -5,7 +5,6 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
-// Use dynamic import for CodeBox and Footer components
 const CodeBox = dynamic(() => import('./components/CodeBox'), { ssr: false });
 const Footer = dynamic(() => import('./components/Footer'), { ssr: false });
 
