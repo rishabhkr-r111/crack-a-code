@@ -1,8 +1,6 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Crack-a-Code
 
-## Getting Started
-
-First, run the development server:
+ run the development server:
 
 ```bash
 npm run dev
@@ -16,21 +14,35 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Screenshots
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+![image](https://github.com/user-attachments/assets/ad511a3e-e06a-46d7-8392-41c08b00cc0e)
 
-## Learn More
+![image](https://github.com/user-attachments/assets/93b39e72-617d-4e60-b1f5-60ce4cfeee71)
 
-To learn more about Next.js, take a look at the following resources:
+![image](https://github.com/user-attachments/assets/fe99b133-e085-42da-9c8c-66432bdf0f0b)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+![image](https://github.com/user-attachments/assets/e960329f-24a4-48cb-ac3d-a16587d2c4bb)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+![image](https://github.com/user-attachments/assets/97820690-830a-4241-9be4-d3419f267565)
 
-## Deploy on Vercel
+![image](https://github.com/user-attachments/assets/15d1b9ef-ce9b-48f6-b309-c044da4dced6)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+![image](https://github.com/user-attachments/assets/c2822eae-5824-4d3b-93d4-2e117b33fa24)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+![image](https://github.com/user-attachments/assets/0ba27310-0d80-40e0-a323-d222fc56095e)
+
+![image](https://github.com/user-attachments/assets/889d559b-1b10-4bf9-82fd-0b4388899532)
+
+![image](https://github.com/user-attachments/assets/4a5e7954-dd1b-4232-9324-5860d7b51ec1)
+
+
+
+
+
+
+
+
+
+
+
